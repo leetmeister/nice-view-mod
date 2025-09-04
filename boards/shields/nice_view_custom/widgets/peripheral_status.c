@@ -23,8 +23,26 @@ LOG_MODULE_DECLARE(zmk, CONFIG_ZMK_LOG_LEVEL);
 
 #include "peripheral_status.h"
 
-LV_IMG_DECLARE(balloon);
-LV_IMG_DECLARE(mountain);
+LV_IMG_DECLARE(randomob00);
+LV_IMG_DECLARE(randomob01);
+LV_IMG_DECLARE(randomob02);
+LV_IMG_DECLARE(randomob03);
+LV_IMG_DECLARE(randomob04);
+LV_IMG_DECLARE(randomob05);
+LV_IMG_DECLARE(randomob06);
+LV_IMG_DECLARE(randomob07);
+
+const lv_img_dsc_t *anim_imgs[] = {
+    &randomob00,
+    &randomob01,
+    &randomob02,
+    &randomob03,
+    &randomob04,
+    &randomob05,
+    &randomob06,
+    &randomob07,
+};
+const size_t anim_img_count = sizeof(anim_imgs) / sizeof(anim_imgs[0]);
 
 static sys_slist_t widgets = SYS_SLIST_STATIC_INIT(&widgets);
 
@@ -114,10 +132,16 @@ int zmk_widget_status_init(struct zmk_widget_status *widget, lv_obj_t *parent) {
     lv_obj_align(top, LV_ALIGN_TOP_RIGHT, 0, 0);
     lv_canvas_set_buffer(top, widget->cbuf, CANVAS_SIZE, CANVAS_SIZE, LV_IMG_CF_TRUE_COLOR);
 
-    lv_obj_t *art = lv_img_create(widget->obj);
-    bool random = sys_rand32_get() & 1;
-    lv_img_set_src(art, random ? &balloon : &mountain);
-    lv_obj_align(art, LV_ALIGN_TOP_LEFT, 0, 0);
+    // To display a static image instead:
+    // lv_obj_t *art = lv_img_create(widget->obj);
+    // lv_img_set_src(art, &handle_declared_by_LV_IMG_DECLARE);
+
+    lv_obj_t * art = lv_animimg_create(widget->obj);
+    lv_obj_center(art);
+    lv_animimg_set_src(art, (const void **) anim_imgs, anim_img_count);
+    lv_animimg_set_duration(art, CONFIG_CUSTOM_ANIMATION_SPEED);
+    lv_animimg_set_repeat_count(art, LV_ANIM_REPEAT_INFINITE);
+    lv_animimg_start(art);
 
     sys_slist_append(&widgets, &widget->node);
     widget_battery_status_init();

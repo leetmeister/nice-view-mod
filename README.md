@@ -1,14 +1,17 @@
 # nice-view-mod
-A copy of the nice!view shield from the official ZMK firmware as a ZMK module for the purposes of easily customizing.
+A customized fork of the [nice-view-mod](https://github.com/GPeye/nice-view-mod) for inclusion as its own ZMK module into customized ZMK build configs to display this custom animation:
+
+![Customization](assets/randomob.gif)
+
+The contents of the the `boards/shields/nice_view_custom` folder should be identical to the upstream https://github.com/zmkfirmware/zmk/blob/main/app/boards/shields/nice_view, except for:
+
+- The `nice_view.*` files which are renamed to `nice_view_custom.*`
+- The references to `nice_view` as `nice_view_custom` in the `Kconfig.devconfig` and `Kconfig.shield` files
+- The customizations to the `widgets/art.c` and `widgets/peripheral_status.c` files
+
 As provided, it should function exactly like the current nice!view shield present in the ZMK firmware.
 
-This module is meant to be added to an existing forked customized keymap repo like [this one for the Urchin board](https://github.com/duckyb/zmk-urchin) or [this one for the Chocofi](https://github.com/beekeeb/zmk-config-corne-chocofi-with-niceview) with build actions set up to build your firmware with github actions and is of course meant for boards with the nice!view. Please check for such forkable repos for your board if you do not currently have one.
-
-This repo is meant only to serve as a starting point for customization such as adding your own art or animations. Simply fork this repo and make the edits you would like and you can easily share your customizations and animations with others as they can easily include your module in thier firmware builds with only a few changes to thier west file and build.yaml.
-
 For a complete example of forking and editing this repo to make a custom nice_view shield with custom animations, check out [https://github.com/GPeye/urchin-peripheral-animation](https://github.com/GPeye/urchin-peripheral-animation)
-
-Replace the url-base and shield name below with whatever you customize in your fork.
 
 ## Usage
 
@@ -20,16 +23,16 @@ manifest:
       # zmk official
     - name: zmkfirmware
       url-base: https://github.com/zmkfirmware
-    - name: gpeye                         #new entry
-      url-base: https://github.com/GPeye  #new entry
+    - name: leetmeister                         #new entry
+      url-base: https://github.com/leetmeister  #new entry
   projects:
     - name: zmk
       remote: zmkfirmware
       revision: main
       import: app/west.yml
-    - name: nice-view-mod                 #new entry
-      remote: gpeye                       #new entry
-      revision: main                      #new entry
+    - name: nice-view-mod                       #new entry
+      remote: leetmeister                       #new entry
+      revision: main                            #new entry
   self:
     path: config
 ```
