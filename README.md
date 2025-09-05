@@ -1,7 +1,7 @@
 # nice-view-mod
 A customized fork of the [nice-view-mod](https://github.com/GPeye/nice-view-mod) for inclusion as its own ZMK module into customized ZMK build configs to display this custom animation:
 
-![Customization](assets/randomob.gif)
+![Customization](assets/rando-mob-animated.gif)
 
 The contents of the the `boards/shields/nice_view_custom` folder should be identical to the upstream https://github.com/zmkfirmware/zmk/blob/main/app/boards/shields/nice_view, except for:
 
